@@ -44,23 +44,21 @@ function App() {
   const onClickItem = (id: number) => {
     const itemIdx = listproducts.findIndex((item) => item?.id === id);
     const newList = [...listproducts];
-    newList[itemIdx].price += 10000;
-    setListproducts(newList);
+    const [clickedItem] = newList.splice(itemIdx, 1);
+    setListproducts([clickedItem, ...newList]);
   };
 
   return (
     <div className="App">
       {listproducts.map((product: ProductModel) => {
-        if (product.price > 1000) {
-          return (
-            <Product
-              id={product.id}
-              name={product.name}
-              price={product.price}
-              onClick={onClickItem}
-            />
-          );
-        }
+        return (
+          <Product
+            id={product.id}
+            name={product.name}
+            price={product.price}
+            onClick={onClickItem}
+          />
+        );
       })}
     </div>
   );
