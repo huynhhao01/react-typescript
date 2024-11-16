@@ -1,65 +1,14 @@
-import React, { useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import { Product } from "./components";
+import ListProducts from "./components/ListProducts";
+import Login from "./pages/Login";
 
-interface ProductModel {
-  id: number;
-  name: string;
-  price: number;
-}
+// import Login from "./pages/Login";
 
-const products: Array<ProductModel> = [
-  {
-    id: 1,
-    name: "T-shirt",
-    price: 20000,
-  },
-  {
-    id: 2,
-    name: "Sweater",
-    price: 50000,
-  },
-  {
-    id: 3,
-    name: "Long Sleeve Shirt",
-    price: 120000,
-  },
-  {
-    id: 4,
-    name: "Long Sleeve Shirt",
-    price: 520000,
-  },
-  {
-    id: 5,
-    name: "Long Sleeve Shirt 2",
-    price: 110000,
-  },
-];
 function App() {
-  const [listproducts, setListproducts] = useState<Array<ProductModel>>(
-    products || []
-  );
-
-  const onClickItem = (id: number) => {
-    const itemIdx = listproducts.findIndex((item) => item?.id === id);
-    const newList = [...listproducts];
-    const [clickedItem] = newList.splice(itemIdx, 1);
-    setListproducts([clickedItem, ...newList]);
-  };
-
   return (
     <div className="App">
-      {listproducts.map((product: ProductModel) => {
-        return (
-          <Product
-            id={product.id}
-            name={product.name}
-            price={product.price}
-            onClick={onClickItem}
-          />
-        );
-      })}
+      <ListProducts />
+      <Login />
     </div>
   );
 }
