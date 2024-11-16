@@ -1,43 +1,30 @@
-import { useState } from "react";
+import { useRef } from "react";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
-
-  const handleChange = (type: string, e: any) => {
-    setFormData({
-      ...formData,
-      [type]: e.target.value,
-    });
-  };
+  const usernameRef = useRef<HTMLInputElement>(null); // uncontrolled component
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(formData.username);
-    console.log(formData.password);
+    if (usernameRef.current) {
+      const username = usernameRef.current.value;
+      console.log(username);
+    }
+    if (passwordRef.current) {
+      const password = passwordRef.current.value;
+      console.log(password);
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <label>Username</label>
-        <input
-          type="text"
-          defaultValue={"username1"}
-          value={formData.username}
-          onChange={(event) => handleChange("username", event)}
-        />
+        <input type="text" defaultValue={"username1"} ref={usernameRef} />
       </div>
       <div>
         <label>Password</label>
-        <input
-          type="password"
-          defaultValue={"password1"}
-          value={formData.password}
-          onChange={(event) => handleChange("password", event)}
-        />
+        <input type="password" defaultValue={"password1"} ref={passwordRef} />
       </div>
       <button type="submit">Submit</button>
     </form>
