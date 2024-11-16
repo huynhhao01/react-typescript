@@ -1,21 +1,22 @@
 import { useState } from "react";
 
 const Login = () => {
-  const [username, setUsername] = useState(""); //control component
-  const [password, setPassword] = useState(""); //control component
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
 
   const handleChange = (type: string, e: any) => {
-    if (type === "username") {
-      setUsername(e.target.value);
-    } else {
-      setPassword(e.target.value);
-    }
+    setFormData({
+      ...formData,
+      [type]: e.target.value,
+    });
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(username);
-    console.log(password);
+    console.log(formData.username);
+    console.log(formData.password);
   };
 
   return (
@@ -24,7 +25,8 @@ const Login = () => {
         <label>Username</label>
         <input
           type="text"
-          value={username}
+          defaultValue={"username1"}
+          value={formData.username}
           onChange={(event) => handleChange("username", event)}
         />
       </div>
@@ -32,7 +34,8 @@ const Login = () => {
         <label>Password</label>
         <input
           type="password"
-          value={password}
+          defaultValue={"password1"}
+          value={formData.password}
           onChange={(event) => handleChange("password", event)}
         />
       </div>
