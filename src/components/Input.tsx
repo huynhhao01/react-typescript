@@ -6,14 +6,14 @@ type Props = {
   type?: string;
 };
 
-const Input = (props: Props) => {
+const Input = ({ label, value, inputKey, onChange, type = "text" }: Props) => {
   return (
     <div>
-      <label>{props.label}</label>
+      <label>{label}</label>
       <input
-        type={props.type}
-        value={props.value}
-        onChange={(e) => props.onChange(props.inputKey, e)}
+        type={type}
+        value={value}
+        onChange={(e) => onChange(inputKey, e)}
       />
     </div>
   );
