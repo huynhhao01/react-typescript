@@ -6,6 +6,8 @@ type Props = {
 };
 
 const Product = (props: Props) => {
+  console.log('id', props.id);
+
   const onClick = () => {
     if (typeof props.onClick === "function") {
       props.onClick(props.id);
