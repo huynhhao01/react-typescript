@@ -1,12 +1,14 @@
+import { memo } from "react";
+
 type Props = {
   id: number;
   name: string;
-  price: number;
+  price?: number;
   onClick?: (id: number) => void;
 };
 
 const Product = (props: Props) => {
-  console.log('id', props.id);
+  console.log("id", props.id);
 
   const onClick = () => {
     if (typeof props.onClick === "function") {
@@ -22,4 +24,6 @@ const Product = (props: Props) => {
   );
 };
 
-export default Product;
+export default memo(Product, (prevProps, nextProps) => {
+  return prevProps.price === nextProps.price;
+});
