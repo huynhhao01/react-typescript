@@ -51,9 +51,17 @@ const ListProducts = () => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    console.log("did mount will run after finish render and side effect");
-    setCount(count + 5);
-  }, []); // if set [count] it will loop forever
+    console.log("did mount");
+    if (count > 5) {
+      listproducts.push({
+        id: 6,
+        name: "Long Sleeve Shirt 2",
+        price: 110000,
+      });
+    }
+  }, [count, listproducts]); // did mount
+  // did mount: []
+  // did update: [dependencies]
 
   const onClickItem = (id: number) => {
     const itemIdx = listproducts.findIndex((item) => item?.id === id);
@@ -66,7 +74,7 @@ const ListProducts = () => {
   };
 
   // const sumValue = heavyCompute(); // will slow increase - did mount
-  const sumValue = useMemo(() => heavyCompute(), []);
+  // const sumValue = useMemo(() => heavyCompute(), []);
 
   const handleIncrease = () => {
     setCount(count + 1);
@@ -75,7 +83,7 @@ const ListProducts = () => {
   return (
     <>
       <button onClick={handleIncrease}>Increase {count}</button>
-      <h2>{sumValue}</h2>
+      {/* <h2>{sumValue}</h2> */}
       {listproducts.map((product: ProductModel, index) => {
         return (
           <Product
