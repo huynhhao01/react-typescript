@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Product } from "../components";
 
 interface ProductModel {
@@ -49,6 +49,11 @@ const ListProducts = () => {
   );
 
   const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log("did mount will run after finish render and side effect");
+    setCount(count + 5);
+  }, []); // if set [count] it will loop forever
 
   const onClickItem = (id: number) => {
     const itemIdx = listproducts.findIndex((item) => item?.id === id);
