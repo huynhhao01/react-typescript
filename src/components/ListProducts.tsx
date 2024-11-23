@@ -59,9 +59,17 @@ const ListProducts = () => {
         price: 110000,
       });
     }
+    const timeFn = setTimeout(() => {
+      console.log('hello');
+    }, 2000);
+    return () => {
+      console.log('will unmount');
+      clearTimeout(timeFn);
+    }
   }, [count, listproducts]); // did mount
   // did mount: []
   // did update: [dependencies]
+  // will unmount: clear resistor item in component
 
   const onClickItem = (id: number) => {
     const itemIdx = listproducts.findIndex((item) => item?.id === id);
