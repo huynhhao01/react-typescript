@@ -2,8 +2,11 @@ import { useRef, useState } from "react";
 import Input from "../components/Input";
 
 const Login = () => {
-  const usernameRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
+  // const usernameRef = useRef<HTMLInputElement>(null);
+  // const passwordRef = useRef<HTMLInputElement>(null);
+
+  const inputRef = useRef<{ [key: string]: HTMLInputElement | null }>({});
+
   // const [formData, setFormData] = useState({
   //   username: "",
   //   password: "",
@@ -18,12 +21,22 @@ const Login = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    if (usernameRef.current) {
-      const username = usernameRef.current.value;
+    // if (usernameRef.current) {
+    //   const username = usernameRef.current.value;
+    //   console.log(username);
+    // }
+    // if (passwordRef.current) {
+    //   console.log(passwordRef.current.value);
+    // }
+
+    console.log("inputRef", inputRef);
+    if (inputRef.current?.username) {
+      const username = inputRef.current?.username.value;
       console.log(username);
     }
-    if (passwordRef.current) {
-      console.log(passwordRef.current.value);
+    if (inputRef.current?.password) {
+      const password = inputRef.current?.password.value;
+      console.log(password);
     }
   };
 
@@ -35,7 +48,7 @@ const Login = () => {
         label="Username"
         // value={formData.username}
         // onChange={onHandleChange}
-        ref={usernameRef}
+        ref={(element) => (inputRef.current["username"] = element)}
         defaultValue={""}
       />
       <Input
@@ -44,7 +57,7 @@ const Login = () => {
         // value={formData.password}
         // onChange={onHandleChange}
         type="password"
-        ref={passwordRef}
+        ref={(element) => (inputRef.current["password"] = element)}
         defaultValue={""}
       />
       <button type="submit">Submit</button>
