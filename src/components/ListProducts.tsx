@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Product } from "../components";
 
 interface ProductModel {
@@ -6,6 +6,14 @@ interface ProductModel {
   name: string;
   price: number;
 }
+
+const heavyCompute = () => {
+  let sum = 0;
+  for (let i = 0; i < 1000000000; i++) {
+    sum += 1;
+  }
+  return sum;
+};
 
 const products: Array<ProductModel> = [
   {
@@ -40,19 +48,33 @@ const ListProducts = () => {
     products || []
   );
 
+  const [count, setCount] = useState(0);
+
   const onClickItem = (id: number) => {
     const itemIdx = listproducts.findIndex((item) => item?.id === id);
     const newList = [...listproducts];
-    const [clickedItem] = newList.splice(itemIdx, 1);
-    setListproducts([clickedItem, ...newList]);
+    // const [clickedItem] = newList.splice(itemIdx, 1);
+    // setListproducts([clickedItem, ...newList]);
+
+    newList[itemIdx].price += 1000;
+    setListproducts(newList);
+  };
+
+  // const sumValue = heavyCompute(); // will slow increase - did mount
+  const sumValue = useMemo(() => heavyCompute(), []);
+
+  const handleIncrease = () => {
+    setCount(count + 1);
   };
 
   return (
     <>
-      {listproducts.map((product: ProductModel) => {
+      <button onClick={handleIncrease}>Increase {count}</button>
+      <h2>{sumValue}</h2>
+      {listproducts.map((product: ProductModel, index) => {
         return (
           <Product
-            key={product.id}
+            key={index}
             id={product.id}
             name={product.name}
             price={product.price}
