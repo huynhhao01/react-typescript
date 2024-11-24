@@ -3,31 +3,47 @@ import type { Post as PostModel } from "./../types/post.type";
 
 interface Props {
   post: PostModel;
+  savePost: (post: PostModel) => void;
 }
 
-const Post = ({ post }: Props) => {
+const Post = ({ post, savePost }: Props) => {
   const [editingTitle, setEditingTitle] = useState(false);
+  const [editingBody, setEditingBody] = useState(false);
   const [titleText, setTitleText] = useState(post.title);
+  const [bodyText, setBodyText] = useState(post.body);
 
-  const showInput = (value: boolean) => {
-    setEditingTitle(value);
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitleText(e.target.value);
   };
 
-  const handleChange = (e: any) => {
-    setTitleText(e.target.value);
+  const handleBodyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBodyText(e.target.value);
+  };
+
+  const handleSavePost = () => {
+    savePost({ ...post, title: titleText, body: bodyText });
+    setEditingTitle(false);
+    setEditingBody(false);
   };
 
   return (
     <div>
-      {editingTitle ? (
+      {editingTitle || editingBody ? (
         <div>
-          <input type="text" value={titleText} onChange={handleChange} />
-          <button onClick={() => showInput(false)}>Save</button>
+          {editingTitle && (
+            <input type="text" value={titleText} onChange={handleTitleChange} />
+          )}
+          {editingBody && (
+            <input type="text" value={bodyText} onChange={handleBodyChange} />
+          )}
+          <button onClick={handleSavePost}>Save</button>
         </div>
       ) : (
-        <b onClick={() => showInput(true)}>{post.title}</b>
+        <div>
+          <b onClick={() => setEditingTitle(true)}><i>{post.title}</i></b>
+          <p onClick={() => setEditingBody(true)}>{post.body}</p>
+        </div>
       )}
-      <p>{post.body}</p>
     </div>
   );
 };
