@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
-
-interface Post {
-  id: number;
-  title: string;
-  body: string;
-  userId: number;
-}
+import type {Post as PostModel} from './../types/post.type'
+import Post from "../components/Post";
 
 const ListPosts = () => {
   const [listPosts, setListPosts] = useState([]);
@@ -26,11 +21,8 @@ const ListPosts = () => {
   return (
     <div>
       <h2>List Posts</h2>
-      {listPosts.map((item: Post) => (
-        <div>
-          <b>{item.title}</b>
-          <p>{item.body}</p>
-        </div>
+      {listPosts.map((item: PostModel, index: number) => (
+        <Post key={index} post={item}/>
       ))}
     </div>
   );
