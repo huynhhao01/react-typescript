@@ -8,19 +8,20 @@ interface Props {
 const Post = ({ post }: Props) => {
   const [editingTitle, setEditingTitle] = useState(false);
 
-  const showInput = () => {
-    setEditingTitle(true);
+  const showInput = (value: boolean) => {
+    setEditingTitle(value);
   };
 
   return (
     <div>
-      <div>
-        {editingTitle ? (
+      {editingTitle ? (
+        <div>
           <input type="text" value={post.title} />
-        ) : (
-          <b onClick={showInput}>{post.title}</b>
-        )}
-      </div>
+          <button onClick={() => showInput(false)}>Save</button>
+        </div>
+      ) : (
+        <b onClick={() => showInput(true)}>{post.title}</b>
+      )}
       <p>{post.body}</p>
     </div>
   );
