@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { Product } from "../components";
+import { ListProductContext } from "../hooks/context";
 
 interface ProductModel {
   id: number;
@@ -50,6 +51,9 @@ const ListProducts = () => {
 
   const [count, setCount] = useState(0);
 
+  const toggle = useContext(ListProductContext);
+  console.log("toggle", toggle);
+
   useEffect(() => {
     console.log("did mount");
     if (count > 5) {
@@ -60,12 +64,12 @@ const ListProducts = () => {
       });
     }
     const timeFn = setTimeout(() => {
-      console.log('hello');
+      console.log("hello");
     }, 2000);
     return () => {
-      console.log('will unmount');
+      console.log("will unmount");
       clearTimeout(timeFn);
-    }
+    };
   }, [count, listproducts]); // did mount
   // did mount: []
   // did update: [dependencies]

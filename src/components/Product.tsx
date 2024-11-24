@@ -1,4 +1,5 @@
-import { memo } from "react";
+import { memo, useContext, useState } from "react";
+import { ListProductContext } from "../hooks/context";
 
 type Props = {
   id: number;
@@ -9,6 +10,10 @@ type Props = {
 
 const Product = (props: Props) => {
   console.log("id", props.id);
+  
+  // not use if unnessary to avoid re-render 
+  // const toggleList = useContext(ListProductContext);
+  // console.log("toggleList ", toggleList);
 
   const onClick = () => {
     if (typeof props.onClick === "function") {
