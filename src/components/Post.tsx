@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import type { Post as PostModel } from "./../types/post.type";
 
 interface Props {
@@ -6,9 +6,21 @@ interface Props {
 }
 
 const Post = ({ post }: Props) => {
+  const [editingTitle, setEditingTitle] = useState(false);
+
+  const showInput = () => {
+    setEditingTitle(true);
+  };
+
   return (
     <div>
-      <b>{post.title}</b>
+      <div>
+        {editingTitle ? (
+          <input type="text" value={post.title} />
+        ) : (
+          <b onClick={showInput}>{post.title}</b>
+        )}
+      </div>
       <p>{post.body}</p>
     </div>
   );
