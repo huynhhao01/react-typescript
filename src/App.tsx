@@ -4,28 +4,21 @@ import ListProducts from "./components/ListProducts";
 import Login from "./pages/Login";
 import { ListProductContext } from "./hooks/context";
 import ListPosts from "./pages/ListPosts";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-// import Login from "./pages/Login";
+const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/",
+    element: <ListPosts />,
+  },
+]);
 
 function App() {
-  const [toggle, setToggle] = useState(true);
-
-  const handleToggle = () => {
-    setToggle(!toggle);
-  };
-
-  return (
-    <div className="App">
-      <button onClick={handleToggle}>Toggle</button>
-      {/* {toggle ? (
-        <ListProductContext.Provider value={toggle}>
-          <ListProducts />
-        </ListProductContext.Provider>
-      ) : null} */}
-      <Login />
-      <ListPosts />
-    </div>
-  );
+  return <RouterProvider router={router}></RouterProvider>;
 }
 
 export default App;
