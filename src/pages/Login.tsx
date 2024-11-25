@@ -1,7 +1,10 @@
 import { useRef, useState } from "react";
 import Input from "../components/Input";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   // const usernameRef = useRef<HTMLInputElement>(null);
   // const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -29,14 +32,16 @@ const Login = () => {
     //   console.log(passwordRef.current.value);
     // }
 
-    console.log("inputRef", inputRef);
+    let usernameVal = "",
+      passwordVal = "";
     if (inputRef.current?.username) {
-      const username = inputRef.current?.username.value;
-      console.log(username);
+      usernameVal = inputRef.current?.username.value;
     }
     if (inputRef.current?.password) {
-      const password = inputRef.current?.password.value;
-      console.log(password);
+      passwordVal = inputRef.current?.password.value;
+    }
+    if (usernameVal && passwordVal) {
+      navigate("/");
     }
   };
 
