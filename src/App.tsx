@@ -6,6 +6,7 @@ import { ListProductContext } from "./hooks/context";
 import ListPosts from "./pages/ListPosts";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Nav from "./components/Nav";
+import PostDetail from "./pages/PostDetail";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
             <h2>About us</h2>
           </div>
         ),
+      },
+      {
+        path: "/post/:postId",
+        element: <PostDetail />,
       },
     ],
   },
