@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import { ListProductContext } from "./hooks/context";
 import ListPosts from "./pages/ListPosts";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Nav from "./components/Nav";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,29 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <ListPosts />,
+    element: <Nav />,
+    children: [
+      {
+        path: "/",
+        element: <ListPosts />,
+      },
+      {
+        path: "/contact",
+        element: (
+          <div>
+            <h2>Contact</h2>
+          </div>
+        ),
+      },
+      {
+        path: "/about-us",
+        element: (
+          <div>
+            <h2>About us</h2>
+          </div>
+        ),
+      },
+    ],
   },
 ]);
 
