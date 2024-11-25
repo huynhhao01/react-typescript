@@ -28,22 +28,28 @@ const Post = ({ post, savePost }: Props) => {
 
   return (
     <div>
-      {editingTitle || editingBody ? (
-        <div>
-          {editingTitle && (
+      <div>
+        {editingTitle ? (
+          <>
             <input type="text" value={titleText} onChange={handleTitleChange} />
-          )}
-          {editingBody && (
+            <button onClick={handleSavePost}>Save</button>
+          </>
+        ) : (
+          <b onClick={() => setEditingTitle(true)}>
+            <i>{post.title}</i>
+          </b>
+        )}
+      </div>
+      <div>
+        {editingBody ? (
+          <>
             <input type="text" value={bodyText} onChange={handleBodyChange} />
-          )}
-          <button onClick={handleSavePost}>Save</button>
-        </div>
-      ) : (
-        <div>
-          <b onClick={() => setEditingTitle(true)}><i>{post.title}</i></b>
+            <button onClick={handleSavePost}>Save</button>
+          </>
+        ) : (
           <p onClick={() => setEditingBody(true)}>{post.body}</p>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
