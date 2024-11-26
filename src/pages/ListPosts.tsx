@@ -5,9 +5,11 @@ import { useApis } from "../hooks/useApis";
 import { BASE_URL } from "../constants";
 
 const ListPosts = () => {
-  const { data: listPosts = [], setData: setListPosts } = useApis(
-    BASE_URL + "/posts"
-  );
+  const {
+    data: listPosts = [],
+    setData: setListPosts,
+    loading,
+  } = useApis(BASE_URL + "/posts");
 
   const savePost = useCallback(
     (post: PostModel) => {
@@ -23,6 +25,14 @@ const ListPosts = () => {
     [listPosts, setListPosts]
   );
 
+  if (loading) {
+    return (
+      <>
+        <h2>List Posts</h2>
+        <p>Loading...</p>
+      </>
+    );
+  }
   return (
     <div>
       <h2>List Posts</h2>

@@ -41,6 +41,7 @@ export const useListPost = () => {
 
 export const useApis = (url: string) => {
   const [data, setData] = useState<any>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,9 +49,10 @@ export const useApis = (url: string) => {
       if (response.status === 200) {
         const dataResponse = await response.json();
         setData(dataResponse);
+        setLoading(false);
       }
     };
     fetchData();
   }, [url]);
-  return { data, setData };
+  return { data, setData, loading };
 };
