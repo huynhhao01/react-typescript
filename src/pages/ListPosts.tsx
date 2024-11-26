@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import type { Post as PostModel } from "./../types/post.type";
 import Post from "../components/Post";
-import { useListPost } from "../hooks/useApis";
+import { useApis } from "../hooks/useApis";
+import { BASE_URL } from "../constants";
 
 const ListPosts = () => {
-  const {listPosts, setListPosts} = useListPost();
+  const { data: listPosts = [], setData: setListPosts } = useApis(
+    BASE_URL + "/posts"
+  );
 
   const savePost = useCallback(
     (post: PostModel) => {

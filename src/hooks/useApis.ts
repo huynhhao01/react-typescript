@@ -22,7 +22,7 @@ export const usePostDetail = () => {
 };
 
 export const useListPost = () => {
-    const [listPosts, setListPosts] = useState<PostModel[]>([]);
+  const [listPosts, setListPosts] = useState<PostModel[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -36,5 +36,21 @@ export const useListPost = () => {
     };
     fetchPosts();
   }, []);
-  return {listPosts, setListPosts}
-}
+  return { listPosts, setListPosts };
+};
+
+export const useApis = (url: string) => {
+  const [data, setData] = useState<any>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(url);
+      if (response.status === 200) {
+        const dataResponse = await response.json();
+        setData(dataResponse);
+      }
+    };
+    fetchData();
+  }, [url]);
+  return { data, setData };
+};
