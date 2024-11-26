@@ -1,7 +1,10 @@
-import { usePostDetail } from "../hooks/useApis";
+import { useParams } from "react-router-dom";
+import { BASE_URL } from "../constants";
+import { useApis } from "../hooks/useApis";
 
 const PostDetail = () => {
-  const post = usePostDetail();
+  const param = useParams();
+  const { data: post } = useApis(BASE_URL + "/posts/" + param.postId);
 
   if (!post) {
     return null;
