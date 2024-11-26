@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import type { Post as PostModel } from "./../types/post.type";
 
@@ -20,3 +20,21 @@ export const usePostDetail = () => {
   }, []);
   return post;
 };
+
+export const useListPost = () => {
+    const [listPosts, setListPosts] = useState<PostModel[]>([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts"
+      );
+      if (response.status === 200) {
+        const posts = await response.json();
+        setListPosts(posts);
+      }
+    };
+    fetchPosts();
+  }, []);
+  return {listPosts, setListPosts}
+}

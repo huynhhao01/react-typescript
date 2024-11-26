@@ -36,11 +36,12 @@ const Post = ({ post, savePost }: Props) => {
             <button onClick={handleSavePost}>Save</button>
           </>
         ) : (
-          <Link to={`/post/${post.id}`}>
-            <b onClick={() => setEditingTitle(true)}>
-              <i>{post.title}</i>
-            </b>
-          </Link>
+          <>
+            <Link to={`/post/${post.id}`}>
+              <b>{post.title}</b>
+            </Link>
+            <button onClick={() => setEditingTitle(true)}>Edit</button>
+          </>
         )}
       </div>
       <div>
