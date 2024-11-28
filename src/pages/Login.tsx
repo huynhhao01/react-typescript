@@ -1,13 +1,10 @@
 import { useRef, useState } from "react";
 import Input from "../components/Input";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
-  const state = useSelector(state => state);
-  console.log(state);
-  
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // const usernameRef = useRef<HTMLInputElement>(null);
   // const passwordRef = useRef<HTMLInputElement>(null);
@@ -45,7 +42,11 @@ const Login = () => {
       passwordVal = inputRef.current?.password.value;
     }
     if (usernameVal && passwordVal) {
-      navigate("/");
+      dispatch({
+        type: "LOGIN",
+        usename: usernameVal,
+        password: passwordVal,
+      });
     }
   };
 

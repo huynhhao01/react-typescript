@@ -6,8 +6,8 @@ import { BASE_URL } from "../constants";
 import { useSelector } from "react-redux";
 
 const ListPosts = () => {
-  const state = useSelector(state => state);
-  console.log('State list post: ', state);
+  // const state = useSelector(state => state);
+  // console.log('State list post: ', state);
 
   const {
     data: listPosts = [],
