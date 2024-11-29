@@ -3,7 +3,9 @@ import type { Post as PostModel } from "./../types/post.type";
 import Post from "../components/Post";
 import { useApis } from "../hooks/useApis";
 import { BASE_URL } from "../constants";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../store";
+import { fetchPosts } from "../store/reducers/postsReducer";
 
 const ListPosts = () => {
   // const state = useSelector(state => state);
@@ -14,6 +16,11 @@ const ListPosts = () => {
     setData: setListPosts,
     loading,
   } = useApis(BASE_URL + "/posts");
+
+  const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    dispatch(fetchPosts())
+  }, [dispatch])
 
   const savePost = useCallback(
     (post: PostModel) => {
