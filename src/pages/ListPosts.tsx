@@ -23,8 +23,8 @@ const ListPosts = () => {
     dispatch(fetchPosts());
   }, [dispatch]);
 
-  const { list: listPosts, stage } = useSelector(
-    (state: { posts: PostState }) => state.posts
+  const { list: listPosts, users, stage } = useSelector(
+    (state: { posts: PostState}) => state.posts
   );
 
   const savePost = useCallback(
@@ -53,7 +53,7 @@ const ListPosts = () => {
     <div>
       <h2>List Posts</h2>
       {listPosts.map((item: PostModel, index: number) => (
-        <Post key={index} post={item} savePost={savePost} />
+        <Post key={index} post={item} users={users} savePost={savePost} />
       ))}
     </div>
   );

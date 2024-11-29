@@ -1,17 +1,20 @@
 import { memo, useState } from "react";
-import type { Post as PostModel } from "./../types/post.type";
+import type { Post as PostModel, User as UserModel } from "./../types/post.type";
 import { Link } from "react-router-dom";
 
 interface Props {
   post: PostModel;
+  users: UserModel[];
   savePost: (post: PostModel) => void;
 }
 
-const Post = ({ post, savePost }: Props) => {
+const Post = ({ post, users, savePost }: Props) => {
   const [editingTitle, setEditingTitle] = useState(false);
   const [editingBody, setEditingBody] = useState(false);
   const [titleText, setTitleText] = useState(post.title);
   const [bodyText, setBodyText] = useState(post.body);
+
+  const author = users.find(user => user.id === post.userId);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleText(e.target.value);
@@ -51,7 +54,10 @@ const Post = ({ post, savePost }: Props) => {
             <button onClick={handleSavePost}>Save</button>
           </>
         ) : (
+          <>
           <p onClick={() => setEditingBody(true)}>{post.body}</p>
+          {author && <p>Author: {author.name}</p>}
+          </>
         )}
       </div>
     </div>
