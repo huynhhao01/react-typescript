@@ -18,12 +18,23 @@ export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
 const posts = createSlice({
   name: "posts",
   initialState: {
-    list: []
+    list: [],
+    stage: "idle", // loading, succeeded, failed
+    error: false,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchPosts.fulfilled, (state, action) => {
-      console.log(action);
+      const posts = action.payload.posts;
+      state.list = posts;
+      state.stage = "succeeded";
+    });
+    builder.addCase(fetchPosts.rejected, (state) => {
+      state.error = true;
+      state.stage = "failed";
+    });
+    builder.addCase(fetchPosts.pending, (state) => {
+      state.stage = "loading";
     });
   },
 });

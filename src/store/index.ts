@@ -5,7 +5,7 @@ import { thunk } from "redux-thunk";
 
 const rootReducer = {
   auth: authReducer,
-  post: postsReducer,
+  posts: postsReducer,
 };
 
 const store = configureStore({

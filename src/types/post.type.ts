@@ -4,3 +4,9 @@ export interface Post {
   body: string;
   userId: number;
 }
+
+export type PostState = {
+  list: Array<Post>;
+  stage: "idle" | "loading" | "succeed" | "failed";
+  error: boolean;
+};
