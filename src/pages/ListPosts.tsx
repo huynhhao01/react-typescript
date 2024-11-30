@@ -53,7 +53,7 @@ const ListPosts = () => {
     <div>
       <h2>List Posts</h2>
       {listPosts.map((item: PostModel, index: number) => (
-        <Post key={index} post={item} users={users} savePost={savePost} />
+        <Post key={item.id} post={item} users={users} savePost={savePost} />
       ))}
     </div>
   );
