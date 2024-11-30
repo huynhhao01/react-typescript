@@ -5,15 +5,9 @@ export interface Post {
   userId: number;
 }
 
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-}
-
 export type PostState = {
-  list: Array<Post>;
-  users: Array<User>;
+  ids: Array<Post["id"]>;
+  objList: { [key: Post["id"]]: Post };
   stage: "idle" | "loading" | "succeed" | "failed";
   error: boolean;
 };
