@@ -2,19 +2,17 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { BASE_URL } from "../../constants";
 
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-  const postResponse = fetch(BASE_URL + "/posts");
-  const userResponse = fetch(BASE_URL + "/users");
+  const fetchPost = fetch(BASE_URL + "/posts");
+  const fetchUser = fetch(BASE_URL + "/users");
 
-  // const [postResponse, userResponse] = await Promise.all([
-  //   fetch(BASE_URL + "/posts"),
-  //   fetch(BASE_URL + "/users")
-  // ]);
+  const postsResponse = await fetchPost;
+  const usersResponse = await fetchUser;
 
-  const postData = await postResponse.json();
-  const userData = await userResponse.json();
-
-  if (postData.status === 200 && userData.status === 200) {
+  if (postsResponse.status === 200 && usersResponse.status === 200) {
     // fetch users
+    const postData = await postsResponse.json();
+    const userData = await usersResponse.json();
+
     return {
       error: false,
       posts: postData,
