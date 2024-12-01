@@ -25,12 +25,21 @@ const initialState: PostState = {
   objList: {},
   stage: "idle", // loading, succeeded, failed
   error: false,
-}
+};
 
 const posts = createSlice({
   name: "posts",
   initialState,
-  reducers: {},
+  reducers: {
+    editPost: (state, action) => {
+      const { id, title, body } = action.payload;
+      const existingPost = state.objList[id];
+      if (existingPost) {
+        existingPost.title = title;
+        existingPost.body = body;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchPosts.fulfilled, (state, action) => {
       const { posts } = action.payload;
@@ -47,7 +56,7 @@ const posts = createSlice({
       );
       state.objList = {
         ...state.objList,
-        ...objList
+        ...objList,
       };
       state.ids = [...state.ids, ...ids];
       state.stage = "succeed";
@@ -62,5 +71,6 @@ const posts = createSlice({
   },
 });
 
+export const { editPost } = posts.actions;
 const postsReducer = posts.reducer;
 export default postsReducer;
