@@ -1,20 +1,19 @@
 import { memo, useState } from "react";
-import type { Post as PostModel, User as UserModel } from "./../types/post.type";
+import type { Post as PostModel } from "./../types/post.type";
 import { Link } from "react-router-dom";
+import type { User as UserModel } from "../types/user.type";
 
 interface Props {
   post: PostModel;
-  users: UserModel[];
+  user?: UserModel;
   savePost: (post: PostModel) => void;
 }
 
-const Post = ({ post, users, savePost }: Props) => {
+const Post = ({ post, user, savePost }: Props) => {
   const [editingTitle, setEditingTitle] = useState(false);
   const [editingBody, setEditingBody] = useState(false);
   const [titleText, setTitleText] = useState(post.title);
   const [bodyText, setBodyText] = useState(post.body);
-
-  const author = users.find(user => user.id === post.userId);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitleText(e.target.value);
@@ -55,8 +54,8 @@ const Post = ({ post, users, savePost }: Props) => {
           </>
         ) : (
           <>
-          <p onClick={() => setEditingBody(true)}>{post.body}</p>
-          {author && <p>Author: {author.name}</p>}
+            <p onClick={() => setEditingBody(true)}>{post.body}</p>
+            {user && <b>Author: {user.name}</b>}
           </>
         )}
       </div>
@@ -64,4 +63,13 @@ const Post = ({ post, users, savePost }: Props) => {
   );
 };
 
-export default memo(Post);
+// export default memo(Post)
+export default memo(Post, (prevProps: Props, nextProps: Props) => {
+  const { post: prevPost } = prevProps;
+  const { post } = nextProps;
+  return (
+    prevPost.title === post.title &&
+    prevPost.body === post.body &&
+    prevProps.user?.id === nextProps.user?.id
+  );
+});

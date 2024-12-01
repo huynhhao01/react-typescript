@@ -4,16 +4,24 @@ import Post from "../components/Post";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch } from "../store";
 import { fetchPosts } from "../store/reducers/postsReducer";
+import { UserState } from "../types/user.type";
+import { fetchUsers } from "../store/reducers/usersReducer";
 
 const ListPosts = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(fetchPosts());
+    dispatch(fetchUsers());
   }, [dispatch]);
 
-  const { ids, objList, stage } = useSelector(
-    (state: { posts: PostState }) => state.posts
+  const { postIds, objPosts, objUsers, stage } = useSelector(
+    (state: { posts: PostState; users: UserState }) => ({
+      postIds: state.posts.ids,
+      objPosts: state.posts.objList,
+      objUsers: state.users.objList,
+      stage: state.posts.stage,
+    })
   );
 
   const savePost = useCallback((post: PostModel) => {
@@ -39,9 +47,13 @@ const ListPosts = () => {
   return (
     <div>
       <h2>List Posts</h2>
-      {ids.map((id: PostModel["id"]) => (
-        <Post key={id} post={objList[id]} savePost={savePost} />
-      ))}
+      {postIds.map((id: PostModel["id"]) => {
+        const post = objPosts[id];
+        const user = objUsers[post.userId];
+        // console.log(post);
+        console.log(objUsers);
+        return <Post key={id} post={post} user={user} savePost={savePost} />;
+      })}
     </div>
   );
 };
